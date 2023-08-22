@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>CRUD Tareas</title>
+    <style>
+        form {
+          width: 400px;
+          margin: 0 auto;
+        }
+        input[type="text"],
+        textarea {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          font-size: 15px; /* Tamaño de texto de 20px */
+        }
+        button {
+          padding: 10px 20px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color: #0056b3;
+        }
+
+        /* Estilos para etiquetas y mensajes de error */
+        label {
+          font-weight: bold;
+        }
+
+        /* Estilos para la tabla */
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: 20px;
+        }
+
+        /* Estilos para las celdas del encabezado */
+        th {
+          background-color: #f2f2f2;
+          text-align: left;
+          padding: 10px;
+          border: 1px solid #ddd;
+        }
+
+        /* Estilos para las celdas de datos */
+        td {
+          text-align: left;
+          padding: 10px;
+          border: 1px solid #ddd;
+        }
+
+        /* Establecer un color de fondo alternativo para filas */
+        tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+
+        /* Establecer estilos para cuando se pasa el ratón por encima de una fila */
+        tr:hover {
+          background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+<h1>Lista de Tareas</h1>
+
+<form th:action="@{/api/v1/tasks}" method="post" th:object="${newTask}" >
+    <input type="text" name="newTaskName" placeholder="Nombre" />
+    <input type="text" name="newTaskDescription" placeholder="Descripción" />
+    <input type="text" name="newTaskFecha" placeholder="Fecha" />
+    <input type="text" name="newTaskEstado" placeholder="Estado" />
+    <button type="submit">Agregar</button>
+</form>
+<br>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Fecha</th>
+        <th>Estado</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${tasks}">
+        <td th:text="${task.userId}"></td>
+        <td th:text="${task.name}"></td>
+        <td th:text="${task.descripcion}"></td>
+        <td th:text="${task.fecha}"></td>
+        <td th:text="${task.estado}"></td>
+        <td><a th:href="@{/actualizarUser/{userId}(userId=${task.userId})}">Editar</a></td>
+        <td><a th:href="@{/deleteTask/{userId}(userId=${task.userId})}">Eliminar</a></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
